@@ -2,13 +2,46 @@ function notImplemented() {
   throw new Error('Корзина ещё не реализована. Сначала прочитайте тесты.');
 }
 
-function addToCart() { return notImplemented(); }
-function changeQuantity() { return notImplemented(); }
-function removeFromCart() { return notImplemented(); }
-function calculateCartSubtotal() { return notImplemented(); }
-function calculateOrderTotal() { return notImplemented(); }
+function addToCart(cart, product, quantity) {
+  if (quantity === 0) {
+    throw new RangeError('Cannot add a product with 0 quantity.');
+  }
 
-const cartApi = { addToCart, changeQuantity, removeFromCart, calculateCartSubtotal, calculateOrderTotal };
+  if (quantity > product.stock) {
+    throw new RangeError('Cannot add more product items than in stock.');
+  }
+
+  const productInCart = cart.find(({ id }) => id === product.id) || null;
+
+  if (productInCart !== null) {
+    productInCart.quantity += quantity;
+  } else {
+    cart.push({ ...product, quantity });
+  }
+
+  return cart;
+}
+
+function changeQuantity() {
+  return notImplemented();
+}
+function removeFromCart() {
+  return notImplemented();
+}
+function calculateCartSubtotal() {
+  return notImplemented();
+}
+function calculateOrderTotal() {
+  return notImplemented();
+}
+
+const cartApi = {
+  addToCart,
+  changeQuantity,
+  removeFromCart,
+  calculateCartSubtotal,
+  calculateOrderTotal,
+};
 
 if (typeof module !== 'undefined') module.exports = cartApi;
 if (typeof window !== 'undefined') window.cartApi = cartApi;
