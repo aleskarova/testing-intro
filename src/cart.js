@@ -49,8 +49,23 @@ function removeFromCart(cart, productId) {
 function calculateCartSubtotal(cart) {
   return cart.reduce((acc, cur) => acc + cur.quantity * cur.price, 0);
 }
-function calculateOrderTotal() {
-  return notImplemented();
+
+function calculateOrderTotal(cart, discountCode) {
+  const minTotalForDiscount = 20_000;
+  const activeDiscountCode = 'SAVE10';
+  const discountPercent = 10;
+  const deliveryPrice = 30_000;
+  const minTotalForFreeDelivery = 50_000;
+
+  const subtotal = calculateCartSubtotal(cart);
+  const discount =
+    discountCode === activeDiscountCode && subtotal >= minTotalForDiscount
+      ? subtotal * (discountPercent / 100)
+      : 0;
+  const delivery = subtotal >= minTotalForFreeDelivery ? 0 : deliveryPrice;
+  const total = subtotal - discount + delivery;
+
+  return { subtotal, discount, delivery, total };
 }
 
 const cartApi = {
