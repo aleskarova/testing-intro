@@ -22,9 +22,26 @@ function addToCart(cart, product, quantity) {
   return cart;
 }
 
-function changeQuantity() {
-  return notImplemented();
+function changeQuantity(cart, productId, newQuantity) {
+  if (newQuantity === 0) {
+    throw new RangeError('Cannot change product quantity to 0.');
+  }
+
+  const productInCart = cart.find(({ id }) => id === productId) || null;
+
+  if (productInCart === null) {
+    return cart;
+  }
+
+  if (newQuantity > productInCart.stock) {
+    throw new RangeError('Cannot add more product items than in stock.');
+  }
+
+  productInCart.quantity = newQuantity;
+
+  return cart;
 }
+
 function removeFromCart() {
   return notImplemented();
 }
