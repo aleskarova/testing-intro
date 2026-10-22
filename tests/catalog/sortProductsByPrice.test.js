@@ -43,16 +43,19 @@ describe('sortProductsByPrice', () => {
     const toSort = getProductsByIds([1, 3, 4]);
     const sorted = sortProductsByPrice(toSort, 'asc');
     expect(sorted).not.toBe(toSort);
+    expect(toSort.map((p) => p.id)).toEqual([1, 3, 4]);
   });
 
   test("'desc' не меняет исходный массив [1, 3, 4]", () => {
     const toSort = getProductsByIds([1, 3, 4]);
     const sorted = sortProductsByPrice(toSort, 'desc');
     expect(sorted).not.toBe(toSort);
+    expect(toSort.map((p) => p.id)).toEqual([1, 3, 4]);
   });
 
   test('направление по умолчанию не меняет исходный массив всех товаров', () => {
     const sorted = sortProductsByPrice(products);
     expect(sorted).not.toBe(products);
+    expect(products.map((p) => p.id)).toEqual([1, 2, 3, 4, 5, 6]);
   });
 });
