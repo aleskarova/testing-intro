@@ -1,5 +1,5 @@
 function addToCart(cart, product, quantity) {
-  if (quantity === 0) {
+  if (!Number.isInteger(quantity) || quantity <= 0) {
     throw new RangeError('Cannot add a product with 0 quantity.');
   }
 
@@ -19,7 +19,7 @@ function addToCart(cart, product, quantity) {
 }
 
 function changeQuantity(cart, productId, newQuantity) {
-  if (newQuantity === 0) {
+  if (!Number.isInteger(newQuantity) || newQuantity <= 0) {
     throw new RangeError('Cannot change product quantity to 0.');
   }
 
