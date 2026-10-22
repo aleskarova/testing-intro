@@ -3,11 +3,12 @@ function addToCart(cart, product, quantity) {
     throw new RangeError('Cannot add a product with 0 quantity.');
   }
 
-  if (quantity > product.stock) {
+  const productInCart = cart.find(({ id }) => id === product.id) || null;
+
+  const quantityInCart = productInCart !== null ? productInCart.quantity : 0;
+  if (quantityInCart + quantity > product.stock) {
     throw new RangeError('Cannot add more product items than in stock.');
   }
-
-  const productInCart = cart.find(({ id }) => id === product.id) || null;
 
   if (productInCart !== null) {
     productInCart.quantity += quantity;
